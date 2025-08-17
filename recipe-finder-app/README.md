@@ -1,12 +1,29 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a responsive web application designed to help users discover, search for, and save delicious recipes. It's built with a focus on a clean, intuitive UI and a seamless UX, allowing home cooks and food enthusiasts to easily explore a world of culinary inspiration.
 
-Currently, two official plugins are available:
+ Features
+Landing Page: An inviting welcome screen with a prominent call-to-action to engage users.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Dashboard: A personalized main screen featuring trending recipes and categories for quick discovery.
 
-## Expanding the ESLint configuration
+Search Functionality: A search page with filtering options (e.g., cuisine, diet, cooking time) to help users find exactly what they're looking for.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Recipe Details: A comprehensive view for each recipe, including a large image, ingredients list, and step-by-step instructions.
+
+Responsive Design: The app is built to look and function beautifully on any device,(phones & destop).
+
+Interactive UI: Hover effects and transitions.
+
+ Tools Used
+React: A powerful JavaScript library for building the user interface.
+
+Vite: A fast build tool that provides an excellent development experience.
+
+Tailwind CSS: A utility-first CSS framework for rapid and consistent styling.
+
+Figma: Used for creating the high-fidelity designs and wireframes.
+
+Git & GitHub: For version control and collaborative development.
+
+Repository: https://github.com/Maryline-ui/capstone-fe-project
