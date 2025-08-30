@@ -2,14 +2,10 @@ import React from 'react';
 import useFavoritesStore from '../store/favoritesStore';
 
 const RecipeDetails = ({ recipe, onBack }) => {
-  // Use the Zustand store to access favorites data and functions
-  const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
-
-  // Check if the current recipe is a favorite
+  const { isFavorite, addFavorite, removeFavorite } = useFavoritesStore();
   const isCurrentlyFavorite = isFavorite(recipe.idMeal);
 
-  // A function to toggle the favorite status
-  const toggleFavorite = () => {
+  const handleFavoriteClick = () => {
     if (isCurrentlyFavorite) {
       removeFavorite(recipe.idMeal);
     } else {
@@ -17,50 +13,88 @@ const RecipeDetails = ({ recipe, onBack }) => {
     }
   };
 
+  // Helper function to get ingredients and measures
+  const getIngredients = () => {
+    const ingredients = [];
+    for (let i = 1; i <= 20; i++) {
+      const ingredient = recipe[`strIngredient${i}`];
+      const measure = recipe[`strMeasure${i}`];
+      if (ingredient && ingredient.trim() !== '') {
+        ingredients.push({ ingredient, measure });
+      }
+    }
+    return ingredients;
+  };
+
+  const ingredientsList = getIngredients();
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-8 max-w-2xl mx-auto my-8">
-      <button
-        onClick={onBack}
-        className="mb-4 text-blue-500 hover:text-blue-700 transition-colors duration-200"
-      >
-        &larr; Back to all recipes
+    <div className="bg-white rounded-lg shadow-xl p-6 md:p-10 mb-8 mx-auto max-w-4xl">
+      <button onClick={onBack} className="flex items-center text-blue-500 hover:text-blue-700 transition-colors mb-6">
+        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+        </svg>
+        Back to recipes
       </button>
 
-      <img
-        src={recipe.strMealThumb}
-        alt={recipe.strMeal}
-        className="w-full h-64 object-cover rounded-lg mb-6"
-      />
-
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold text-gray-900">{recipe.strMeal}</h1>
-        
-        {/* The new favorite button */}
-        <button
-          onClick={toggleFavorite}
-          className={`py-2 px-4 rounded-full font-semibold transition-colors duration-200 ${
-            isCurrentlyFavorite
-              ? 'bg-red-500 text-white hover:bg-red-600'
-              : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-          }`}
-        >
-          {isCurrentlyFavorite ? '❤️ Favorited' : '🤍 Add to Favorites'}
-        </button>
+      <div className="relative">
+        <img
+          src={recipe.strMealThumb}
+          alt={recipe.strMeal}
+          className="w-full h-auto rounded-lg"
+        />
+        <div className="absolute top-4 right-4">
+          <button
+            onClick={handleFavoriteClick}
+            className="p-3 rounded-full bg-white bg-opacity-70 text-gray-800 hover:text-red-500 transition-colors"
+            aria-label="Toggle favorite status"
+          >
+            {isCurrentlyFavorite ? (
+              <span className="text-3xl">❤️</span>
+            ) : (
+              <span className="text-3xl">🤍</span>
+            )}
+          </button>
+        </div>
       </div>
 
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold text-gray-800 border-b pb-2 mb-4">Ingredients</h2>
-        <ul className="list-disc pl-5">
-          {Object.keys(recipe).filter(key => key.startsWith('strIngredient') && recipe[key]).map((key, index) => (
-            <li key={index} className="text-gray-700">{recipe[key]} - {recipe[`strMeasure${key.slice(13)}`]}</li>
-          ))}
-        </ul>
+      <div className="mt-6 text-center">
+        <h2 className="text-3xl font-bold mb-2">{recipe.strMeal}</h2>
+        <p className="text-sm text-gray-600 mb-4">{recipe.strCategory} | {recipe.strArea}</p>
       </div>
 
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold text-gray-800 border-b pb-2 mb-4">Instructions</h2>
-        <p className="text-gray-700">{recipe.strInstructions}</p>
+      <div className="grid md:grid-cols-2 gap-8 mt-8">
+        <div>
+          <h3 className="text-xl font-semibold mb-3 border-b-2 border-gray-200 pb-1">Ingredients</h3>
+          <ul className="list-disc list-inside space-y-1 text-gray-700">
+            {ingredientsList.map((item, index) => (
+              <li key={index}>
+                <span className="font-semibold">{item.measure}</span> - {item.ingredient}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold mb-3 border-b-2 border-gray-200 pb-1">Instructions</h3>
+          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{recipe.strInstructions}</p>
+        </div>
       </div>
+      
+      {recipe.strYoutube && (
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold mb-3">Video Instructions</h3>
+          <div className="aspect-w-16 aspect-h-9">
+            <iframe
+              title="YouTube video player"
+              src={`https://www.youtube.com/embed/${recipe.strYoutube.split('v=')[1]}`}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-auto rounded-lg"
+            ></iframe>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

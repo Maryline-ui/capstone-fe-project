@@ -2,9 +2,7 @@ import React from 'react';
 import useFavoritesStore from '../store/favoritesStore';
 import RecipeCard from './RecipeCard';
 
-// This component displays a list of the user's favorite recipes.
 const FavoritesList = ({ onRecipeSelect }) => {
-  // Use the Zustand store to get the list of favorite recipes
   const { favorites } = useFavoritesStore();
 
   if (favorites.length === 0) {

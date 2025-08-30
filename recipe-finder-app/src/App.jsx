@@ -6,14 +6,12 @@ import FavoritesList from './components/FavoritesList';
 import SearchBar from './components/SearchBar';
 import Footer from './components/Footer';
 
-// Component for a simple loading spinner (for RecipeDetails)
 const Loader = () => (
   <div className="flex justify-center items-center py-12">
     <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
   </div>
 );
 
-// Component for displaying an error message (for RecipeDetails)
 const ErrorMessage = ({ message }) => (
   <div className="flex justify-center items-center py-12 text-red-500">
     <p className="text-lg font-medium">{message}</p>

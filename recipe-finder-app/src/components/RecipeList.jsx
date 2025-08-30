@@ -24,14 +24,13 @@ const RecipeList = ({ category, searchQuery, onRecipeSelect }) => {
         setLoading(true);
         setError(null);
         
-        // The API endpoint now changes based on category or search query
         let url;
         if (searchQuery) {
           url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`;
         } else if (category) {
           url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
         } else {
-          url = 'https://www.themealdb.com/api/json/v1/1/random.php'; // Get a random recipe if nothing is selected
+          url = 'https://www.themealdb.com/api/json/v1/1/random.php';
         }
 
         const response = await fetch(url);
@@ -55,7 +54,7 @@ const RecipeList = ({ category, searchQuery, onRecipeSelect }) => {
     };
 
     fetchRecipes();
-  }, [category, searchQuery]); // This hook now runs when category or search query changes
+  }, [category, searchQuery]);
 
   if (loading) {
     return <Loader />;
